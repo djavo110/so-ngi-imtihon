@@ -10,7 +10,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/glightbox/3.2.0/css/glightbox.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
-    
     <style>
        * {
   margin: 0;
@@ -31,7 +30,7 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  width: 260px;
+  width: 280px;
   height: 100vh;
   background: #2b2b38;
   padding: 20px;
@@ -47,11 +46,37 @@ body {
 }
 
 .sitename {
-  color: #fff;
+  color: #c4b0b0;
   font-size: 22px;
   font-weight: 600;
   text-align: center;
 }
+/* Profil rasmi uchun */
+.profile-img img {
+  width: 200px;          /* kenglik */
+  height: 200px;         /* balandlik */
+  object-fit: cover;     /* rasmni markazga qirqib joylash */
+  border-radius: 50%;    /* dumaloq qilish */
+  border: 4px solid #fff;/* oq ramka */
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.3); /* soyali effekt */
+  transition: transform 0.3s ease;
+}
+
+/* Hover effekti */
+.profile-img img:hover {
+  transform: scale(1.05); /* ustiga olib borilganda biroz kattalashadi */
+}
+
+.social-links a {
+  font-size: 28px;   /* ikonka o‘lchami */
+  margin: 0 10px;    /* ikonka orasidagi masofa */
+}
+.social-links a:hover {
+  color: #007bff;    /* hover bo‘lganda rang o‘zgaradi */
+  transform: scale(1.2);  /* kattalashib chiqadi */
+  transition: 0.3s;
+}
+
 
 .stats-item{
   background:#fff;padding:22px;border-radius:12px;flex:1;min-width:180px;
@@ -153,6 +178,99 @@ section:nth-child(even) {
   transition: transform var(--transition), box-shadow var(--transition);
 }
 .php-email-form button:hover{transform: translateY(-3px);box-shadow:0 10px 30px rgba(6,182,212,0.12)}
+
+/* Rasm konteyneri */
+.portfolio-content {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px; /* chiroyli burchaklar */
+}
+
+/* Rasmning o‘zi */
+.portfolio-content img {
+  transition: transform 0.5s ease, filter 0.5s ease;
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Hover bo‘lganda rasmni zoom va qoraytirish */
+.portfolio-content:hover img {
+  transform: scale(1.1);
+  filter: brightness(0.6);
+}
+
+/* Yozuvlar uchun qoplama */
+.portfolio-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  background: rgba(0,0,0,0.5); /* qora shaffof fon */
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  text-align: center;
+  padding: 20px;
+}
+
+/* Hover bo‘lganda yozuv chiqib keladi */
+.portfolio-content:hover .portfolio-info {
+  opacity: 1;
+}
+/* Filter button container */
+.portfolio-filters {
+  display: flex;
+  justify-content: center; /* markazga chiqarish */
+  gap: 15px; /* tugmalar orasidagi masofa */
+  list-style: none;
+  padding: 0;
+  margin: 0 0 30px 0;
+  flex-wrap: wrap; /* ekranni kichrayganda pastga tushsin */
+}
+
+/* Filter tugmalari */
+.portfolio-filters li {
+  cursor: pointer;
+  padding: 8px 18px;
+  border-radius: 25px;
+  background: #f2f2f2;
+  font-size: 15px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+/* Hover effekti */
+.portfolio-filters li:hover {
+  background: #4154f1;
+  color: #fff;
+}
+
+/* Aktiv bo‘lgani */
+.portfolio-filters .filter-active {
+  background: #4154f1;
+  color: #fff;
+}
+#footer {
+  text-align: center;   /* o‘rtaga chiqaradi */
+  padding: 20px 0;      /* tepaga va pastga joy tashlaydi */
+}
+html, body {
+  height: 100%;
+}
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+
     </style>
 </head>
 <body>
@@ -168,8 +286,8 @@ section:nth-child(even) {
     <div class="social-links text-center">
       <a href="#" class="twitter"><i class="bi bi-twitter-x"></i></a>
       <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-      <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-      <a href="#" class="google-plus"><i class="bi bi-skype"></i></a>
+      <a href="https://www.instagram.com/djavo__110/" class="instagram"><i class="bi bi-instagram"></i></a>
+      <a href="https://t.me/djavo_110" class="telegram"><i class="bi bi-telegram"></i></a>
       <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
     </div>
 
@@ -190,13 +308,27 @@ section:nth-child(even) {
       <section class="hero">
         <img src="/media/photo_my.jpg" alt="Profile Photo" class="hero-img" data-aos="fade-in">
 
-        <div class="hero-content" data-aos="fade-up" data-aos-delay="100">
-          <h2>Javohir Mirzayev</h2>
-          <p>
-            I'm <span class="typed" data-typed-items="Designer, Developer, Freelancer, Photographer">Designer</span>
-            <span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span>
-          </p>
-        </div>
+        <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+          <div class="hero-content" data-aos="fade-up" data-aos-delay="100">
+            <h2>Javohir Mirzayev</h2>
+            <p>
+              I'm <span class="typed"></span>
+            </p>
+          </div>
+
+          <!-- Typed.js ni ishga tushirish -->
+          <script>
+            document.addEventListener("DOMContentLoaded", function () {
+              new Typed(".typed", {
+                strings: ["Designer", "Web Developer", "Freelancer", "Photographer"],
+                typeSpeed: 100,
+                backSpeed: 50,
+                backDelay: 1000,
+                loop: true
+              });
+            });
+          </script>
       </section>
 
 
@@ -207,7 +339,7 @@ section:nth-child(even) {
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
         <h2>About</h2>
-        <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+        <p>Qulaylik uchun katta og'riqlar olinadi. Biror narsadan ergashgan ehtiyojlari uni haqiqatan ham qochib yuboradi. Istakka intiling. Kim xohlasa. Va hech kim unga to'sqinlik qilmaydi. Chunki qochib, bu erda, albatta, bu qulaylik vazifalarida bo'ling.</p>
       </div><!-- End Section Title -->
 
       <div class="container" data-aos="fade-up" data-aos-delay="100">
@@ -217,7 +349,7 @@ section:nth-child(even) {
             <img src="/media/photo_my.jpg" class="img-fluid" alt="">
           </div>
           <div class="col-lg-8 content">
-            <h2>UI/UX Designer &amp; Web Developer.</h2>
+            <h2>Web Developer.</h2>
             <p class="fst-italic py-3">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
               magna aliqua.
@@ -227,7 +359,7 @@ section:nth-child(even) {
                 <ul>
                   <li><i class="bi bi-chevron-right"></i> <strong>Birthday:</strong> <span>2 August 2005</span></li>
                   <li><i class="bi bi-chevron-right"></i> <strong>Website:</strong> <span>www.example.com</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Phone:</strong> <span>+998 (90) 443-16-83</span></li>
+                  <li><i class="bi bi-chevron-right"></i> <strong>Phone:</strong> <span>+998 (91) 443-16-83</span></li>
                   <li><i class="bi bi-chevron-right"></i> <strong>City:</strong> <span>Uzbekistan</span></li>
                 </ul>
               </div>
@@ -235,20 +367,22 @@ section:nth-child(even) {
                 <ul>
                   <li><i class="bi bi-chevron-right"></i> <strong>Age:</strong> <span>20</span></li>
                   <li><i class="bi bi-chevron-right"></i> <strong>Degree:</strong> <span>Midge</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Email:</strong> <span>javohirmirzayev110@example.com</span></li>
+                  <li><i class="bi bi-chevron-right"></i> <strong>Email:</strong> <span>mirzayevjavohir110@example.com</span></li>
                   <li><i class="bi bi-chevron-right"></i> <strong>Freelance:</strong> <span>Available</span></li>
                 </ul>
               </div>
             </div>
             <p class="py-3">
-              Officiis eligendi itaque labore et dolorum mollitia officiis optio vero. Quisquam sunt adipisci omnis et ut. Nulla accusantium dolor incidunt officia tempore. Et eius omnis.
-              Cupiditate ut dicta maxime officiis quidem quia. Sed et consectetur qui quia repellendus itaque neque.
+              Men Buxoro viloyatining Vobkent tumanida tug'ilganman. Hozirda Toshkent to'qimachilik va yengil sanoat institutining Iqtisod fakultetida tahsil olyapman. 3-kurs talabasi. Dasturlashga bo'lgan qiziqishim maktab davrlarimda boshlandi va shu sohada o'z bilimlarimni oshirishga harakat qilaman. Maqsadim - zamonaviy va foydalanuvchi uchun qulay veb-saytlar yaratish orqali raqamli dunyoda o'z izimni qoldirish.
             </p>
           </div>
         </div>
 
       </div>
-
+    <!-- PDF yuklab olish tugmasi -->
+    <a href="{% url 'download_about_pdf' %}" class="btn btn-primary">
+        📥 PDF Yuklab olish
+    </a>
     </section><!-- /About Section -->
 
     <!-- Stats Section -->
@@ -300,61 +434,72 @@ section:nth-child(even) {
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
         <h2>Skills</h2>
-        <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
+        <p>Mening asosiy texnologiyalarim va darajalarim</p>
       </div><!-- End Section Title -->
 
       <div class="container" data-aos="fade-up" data-aos-delay="100">
 
-        <div class="row skills-content skills-animation">
+        <div class="row gy-4">
 
-          <div class="col-lg-6">
-
+          <!-- Skill Item -->
+          <div class="col-md-6 col-lg-4">
             <div class="progress">
-              <span class="skill"><span>HTML</span> <i class="val">100%</i></span>
+              <span class="skill">HTML <i class="val">60%</i></span>
               <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0"
+                  aria-valuemax="100"></div>
               </div>
-            </div><!-- End Skills Item -->
-
-            <div class="progress">
-              <span class="skill"><span>CSS</span> <i class="val">90%</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-            </div><!-- End Skills Item -->
-
-            <div class="progress">
-              <span class="skill"><span>JavaScript</span> <i class="val">75%</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-            </div><!-- End Skills Item -->
-
+            </div>
           </div>
 
-          <div class="col-lg-6">
-
+          <div class="col-md-6 col-lg-4">
             <div class="progress">
-              <span class="skill"><span>PHP</span> <i class="val">80%</i></span>
+              <span class="skill">CSS <i class="val">40%</i></span>
               <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar" role="progressbar" style="width: 40%;" aria-valuenow="40" aria-valuemin="0"
+                  aria-valuemax="100"></div>
               </div>
-            </div><!-- End Skills Item -->
+            </div>
+          </div>
 
+          <div class="col-md-6 col-lg-4">
             <div class="progress">
-              <span class="skill"><span>WordPress/CMS</span> <i class="val">90%</i></span>
+              <span class="skill">JavaScript <i class="val">70%</i></span>
               <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar" role="progressbar" style="width: 70%;" aria-valuenow="70" aria-valuemin="0"
+                  aria-valuemax="100"></div>
               </div>
-            </div><!-- End Skills Item -->
+            </div>
+          </div>
 
+          <div class="col-md-6 col-lg-4">
             <div class="progress">
-              <span class="skill"><span>Photoshop</span> <i class="val">55%</i></span>
+              <span class="skill">PHP <i class="val">50%</i></span>
               <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0"
+                  aria-valuemax="100"></div>
               </div>
-            </div><!-- End Skills Item -->
+            </div>
+          </div>
 
+          <div class="col-md-6 col-lg-4">
+            <div class="progress">
+              <span class="skill">WordPress/CMS <i class="val">35%</i></span>
+              <div class="progress-bar-wrap">
+                <div class="progress-bar" role="progressbar" style="width: 35%;" aria-valuenow="35" aria-valuemin="0"
+                  aria-valuemax="100"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-4">
+            <div class="progress">
+              <span class="skill">Photoshop <i class="val">55%</i></span>
+              <div class="progress-bar-wrap">
+                <div class="progress-bar" role="progressbar" style="width: 55%;" aria-valuenow="55" aria-valuemin="0"
+                  aria-valuemax="100"></div>
+              </div>
+            </div>
           </div>
 
         </div>
@@ -369,7 +514,7 @@ section:nth-child(even) {
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
         <h2>Resume</h2>
-        <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+        <p>Qulaylik uchun katta og'riqlar olinadi. Biror narsadan ergashgan ehtiyojlari uni haqiqatan ham qochib yuboradi. Istakka intiling. Kim xohlasa. Va hech kim unga to'sqinlik qilmaydi. Chunki qochib, bu erda, albatta, bu qulaylik vazifalarida bo'ling.</p>
       </div><!-- End Section Title -->
 
       <div class="container">
@@ -377,58 +522,45 @@ section:nth-child(even) {
         <div class="row">
 
           <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-            <h3 class="resume-title">Sumary</h3>
-
-            <div class="resume-item pb-0">
-              <h4>Brandon Johnson</h4>
-              <p><em>Innovative and deadline-driven Graphic Designer with 3+ years of experience designing and developing user-centered digital/print marketing material from initial concept to final, polished deliverable.</em></p>
+            <h3 class="resume-title">Experiences</h3>
+            <div class="resume-item">
+              <h4>Average Web Programming Expert</h4>
+              <h5>2025 - Present</h5>
+              <p><em>Experion, Tashkent </em></p>
               <ul>
-                <li>Portland par 127,Orlando, FL</li>
-                <li>(123) 456-7891</li>
-                <li>alice.barkley@example.com</li>
+                <li>Men hozirda bitiruvchi dasturchiman </li>
+                <li>Ushbu lavozimda men web dasturlash bo'yicha amaliyotchi sifatida ishlayman</li>
+                <li>Web dasturlash bo'yicha mutaxassis</li>
+                <li>2000 dan 25 000 dollargacha bo'lgan ishlab chiqarish loyihasi byudjetlaridan samarali foydalanishni nazorat qilish</li>
               </ul>
             </div><!-- Edn Resume Item -->
 
-            <h3 class="resume-title">Education</h3>
-            <div class="resume-item">
-              <h4>Master of Fine Arts &amp; Graphic Design</h4>
-              <h5>2015 - 2016</h5>
-              <p><em>Rochester Institute of Technology, Rochester, NY</em></p>
-              <p>Qui deserunt veniam. Et sed aliquam labore tempore sed quisquam iusto autem sit. Ea vero voluptatum qui ut dignissimos deleniti nerada porti sand markend</p>
-            </div><!-- Edn Resume Item -->
 
             <div class="resume-item">
-              <h4>Bachelor of Fine Arts &amp; Graphic Design</h4>
-              <h5>2010 - 2014</h5>
-              <p><em>Rochester Institute of Technology, Rochester, NY</em></p>
-              <p>Quia nobis sequi est occaecati aut. Repudiandae et iusto quae reiciendis et quis Eius vel ratione eius unde vitae rerum voluptates asperiores voluptatem Earum molestiae consequatur neque etlon sader mart dila</p>
+              <h4>Faculty of Economics Bachelor's degree</h4>
+              <h5>2023 - 2027</h5>
+              <p><em>Tashkent Institute of Textile and Light Industry</em></p>
             </div><!-- Edn Resume Item -->
 
           </div>
 
           <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
-            <h3 class="resume-title">Professional Experience</h3>
+            <h3 class="resume-title">Education</h3>
             <div class="resume-item">
-              <h4>Senior graphic design specialist</h4>
-              <h5>2019 - Present</h5>
-              <p><em>Experion, New York, NY </em></p>
+              <h4>Najot Ta'lim</h4>
               <ul>
-                <li>Lead in the design, development, and implementation of the graphic, layout, and production communication materials</li>
-                <li>Delegate tasks to the 7 members of the design team and provide counsel on all aspects of the project. </li>
-                <li>Supervise the assessment of all graphic materials in order to ensure quality and accuracy of the design</li>
-                <li>Oversee the efficient use of production project budgets ranging from $2,000 - $25,000</li>
+                <li><a href="https://najottalim.uz">Najot Ta'lim</a></li>
+                <li>Backend Python course</li>
+                <li><a href="https://github.com/djavo110/avtosalon-2">GitHub Repository</a></li>
               </ul>
             </div><!-- Edn Resume Item -->
-
+            
             <div class="resume-item">
-              <h4>Graphic design specialist</h4>
-              <h5>2017 - 2018</h5>
-              <p><em>Stepping Stone Advertising, New York, NY</em></p>
+              <h4>Anvar Narzullayev</h4>
               <ul>
-                <li>Developed numerous marketing programs (logos, brochures,infographics, presentations, and advertisements).</li>
-                <li>Managed up to 5 projects or tasks at a given time while under pressure</li>
-                <li>Recommended and consulted with clients on the most appropriate graphic design</li>
-                <li>Created 4+ design presentations and proposals a month for clients and account managers</li>
+                <li><a href="https://kitobman.uz">Kitobman</a></li>
+                <li><a href="https://www.youtube.com/c/AnvarNarzullaev">YouTube Channel</a></li>
+
               </ul>
             </div><!-- Edn Resume Item -->
 
@@ -442,7 +574,6 @@ section:nth-child(even) {
 
     <!-- Portfolio Section -->
     <section id="portfolio" class="portfolio section light-background">
-
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
         <h2>Portfolio</h2>
@@ -603,7 +734,7 @@ section:nth-child(even) {
                   <h4>Books 3</h4>
                   <p>Lorem ipsum, dolor sit amet consectetur</p>
                   <a href="/media/portfolio/books-3.jpg" title="Branding 3" data-gallery="portfolio-gallery-book" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                  <a href="portfolio-details.html" title="More Details" class="details-link"></a>
+                  <a href="portfolio_details.html" title="More Details" class="details-link"></a>
                 </div>
               </div>
             </div>
@@ -640,7 +771,7 @@ section:nth-child(even) {
                 <i class="bi bi-telephone flex-shrink-0"></i>
                 <div>
                   <h3>Biz bilan bog'laning</h3>
-                  <p>+998 71 123 45 67</p>
+                  <p>+998 99 040 93 58</p>
                 </div>
               </div><!-- End Info Item -->
 
@@ -648,7 +779,7 @@ section:nth-child(even) {
                 <i class="bi bi-envelope flex-shrink-0"></i>
                 <div>
                   <h3>Pochta manzil</h3>
-                  <p>info@example.com</p>
+                  <p>mirzayevjavohir110@gmail.com</p>
                 </div>
               </div><!-- End Info Item -->
 
@@ -664,41 +795,39 @@ section:nth-child(even) {
             </div>
           </div>
 
-          <div class="col-lg-7">
-            <form action="forms/contact.php" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
-              <div class="row gy-4">
+        <div class="col-lg-7">
+          <form action="{% url 'contact' %}" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
+            {% csrf_token %}
+            <div class="row gy-4">
 
-                <div class="col-md-6">
-                  <label for="name-field" class="pb-2">Ismingiz</label>
-                  <input type="text" name="name" id="name-field" class="form-control" required="">
-                </div>
-
-                <div class="col-md-6">
-                  <label for="email-field" class="pb-2">Pochta manzil</label>
-                  <input type="email" class="form-control" name="email" id="email-field" required="">
-                </div>
-
-                <div class="col-md-12">
-                  <label for="subject-field" class="pb-2">Mavzu</label>
-                  <input type="text" class="form-control" name="subject" id="subject-field" required="">
-                </div>
-
-                <div class="col-md-12">
-                  <label for="message-field" class="pb-2">Xabar</label>
-                  <textarea class="form-control" name="message" rows="10" id="message-field" required=""></textarea>
-                </div>
-
-                <div class="col-md-12 text-center">
-                  <div class="loading">Loading</div>
-                  <div class="error-message"></div>
-                  <div class="sent-message">Sizning xabaringiz yuborildi. Rahmat!</div>
-
-                  <button type="submit">Xabar yuborish</button>
-                </div>
-
+              <div class="col-md-6">
+                <label for="name-field" class="pb-2">Ismingiz</label>
+                <input type="text" name="name" id="name-field" class="form-control" required>
               </div>
-            </form>
-          </div><!-- End Contact Form -->
+
+              <div class="col-md-6">
+                <label for="email-field" class="pb-2">Pochta manzil</label>
+                <input type="email" class="form-control" name="email" id="email-field" required>
+              </div>
+
+              <div class="col-md-12">
+                <label for="subject-field" class="pb-2">Mavzu</label>
+                <input type="text" class="form-control" name="subject" id="subject-field" required>
+              </div>
+
+              <div class="col-md-12">
+                <label for="message-field" class="pb-2">Xabar</label>
+                <textarea class="form-control" name="message" rows="10" id="message-field" required></textarea>
+              </div>
+
+              <div class="col-md-12 text-center">
+                <button type="submit">Xabar yuborish</button>
+              </div>
+
+            </div>
+          </form>
+        </div>
+      <!-- End Contact Form -->
 
         </div>
 
@@ -708,18 +837,18 @@ section:nth-child(even) {
 
   </main>
 
-    <footer id="footer" class="footer position-relative light-background">
+        <footer id="footer" class="footer position-relative light-background">
+        <div class="container text-center">   <!-- text-center qo‘shildi -->
+          <div class="copyright">
+            <p>© <span>Copyright</span> <strong class="px-1 sitename">iPortfolio</strong> <span>All Rights Reserved</span></p>
+          </div>
+          <div class="credits">
+            Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> 
+            Distributed by <a href="https://themewagon.com">ThemeWagon</a>
+          </div>
+        </div>
+      </footer>
 
-    <div class="container">
-      <div class="copyright text-center ">
-        <p>© <span>Copyright</span> <strong class="px-1 sitename">iPortfolio</strong> <span>All Rights Reserved</span></p>
-      </div>
-      <div class="credits">
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> Distributed by <a href="https://themewagon.com">ThemeWagon</a>
-      </div>
-    </div>
-
-  </footer>
 
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
@@ -738,6 +867,36 @@ section:nth-child(even) {
   window.addEventListener('load', ()=> document.getElementById('preloader')?.remove())
 </script>
 
+ <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
 
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Portfolio container
+      var portfolioContainer = document.querySelector('.isotope-container');
+      
+      if (portfolioContainer) {
+        // Isotope ni ishga tushirish
+        var iso = new Isotope(portfolioContainer, {
+          itemSelector: '.isotope-item',
+          layoutMode: 'masonry'
+        });
+
+        // Filter tugmalari
+        var filters = document.querySelectorAll('.portfolio-filters li');
+
+        filters.forEach(function (filter) {
+          filter.addEventListener('click', function () {
+            // Avval active class ni o‘chiramiz
+            filters.forEach(f => f.classList.remove('filter-active'));
+            this.classList.add('filter-active');
+
+            // Filterni olish
+            var filterValue = this.getAttribute('data-filter');
+            iso.arrange({ filter: filterValue });
+          });
+        });
+      }
+    });
+  </script>
 </body>
 </html>

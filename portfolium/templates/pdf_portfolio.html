@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>About - {{ name }}</title>
+    <style>
+        body { font-family: DejaVu Sans, sans-serif; font-size: 12pt; }
+        h1 { text-align: center; color: #2c3e50; }
+        .info { margin: 20px; }
+        .info p { margin: 5px 0; }
+        .photo img { width: 150px; border-radius: 10px; }
+    </style>
+</head>
+<body>
+    <h1>{{ name }}</h1>
+
+    <div class="photo">
+        <img src="{{ photo }}" alt="Profile Photo">
+    </div>
+
+    <div class="info">
+        <p><strong>Birthday:</strong> {{ birthday }}</p>
+        <p><strong>Website:</strong> {{ website }}</p>
+        <p><strong>Phone:</strong> {{ phone }}</p>
+        <p><strong>City:</strong> {{ city }}</p>
+        <p><strong>Age:</strong> {{ age }}</p>
+        <p><strong>Degree:</strong> {{ degree }}</p>
+        <p><strong>Email:</strong> {{ email }}</p>
+        <p><strong>Freelance:</strong> {{ freelance }}</p>
+    </div>
+
+    <div class="bio">
+        <p>{{ bio }}</p>
+    </div>
+</body>
+</html>

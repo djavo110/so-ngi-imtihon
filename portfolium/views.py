@@ -6,9 +6,11 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from captcha.fields import CaptchaField
-from io import BytesIO
-import qrcode
-from weasyprint import HTML
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+from django.template.loader import render_to_string
+import os, io
+from django.conf import settings
 
 class UserLoginForm(forms.Form):
     username = forms.CharField(label="Username")
@@ -37,7 +39,7 @@ def index(request):
 def about(request):
     return render(request, 'about.html')
 
-@login_required(login_url='login')
+# @login_required(login_url='login')
 def contact(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
@@ -84,3 +86,36 @@ def login_views(request):
 def logout_view(request):
     logout(request)
     return redirect('login')
+
+def download_about_pdf(request):
+    template_path = "pdf_portfolio.html"
+    image_path = os.path.join(settings.MEDIA_ROOT, "photo_my.jpg")
+    context = {
+        "photo": image_path, 
+        "name": "Javohir Mirzayev",
+        "birthday": "2 August 2005",
+        "website": "www.example.com",
+        "phone": "+998 (91) 443-16-83",
+        "city": "Uzbekistan",
+        "age": "20",
+        "degree": "Midge",
+        "email": "javohirmirzayev110@example.com",
+        "freelance": "Available",
+        "bio": "Men Buxoro viloyatining Vobkent tumanida tug'ilganman. "
+               "Hozirda Toshkent to'qimachilik va yengil sanoat institutining Iqtisod fakultetida tahsil olyapman. "
+               "3-kurs talabasi. Dasturlashga bo'lgan qiziqishim maktab davrlarimda boshlandi va shu sohada o'z bilimlarimni oshirishga harakat qilaman. "
+               "Maqsadim - zamonaviy va foydalanuvchi uchun qulay veb-saytlar yaratish orqali raqamli dunyoda o'z izimni qoldirish."
+    }
+
+    html = render_to_string(template_path, context)
+
+    response = HttpResponse(content_type="application/pdf")
+    response['Content-Disposition'] = 'attachment; filename="about.pdf"'
+
+    pisa_status = pisa.CreatePDF(
+        io.BytesIO(html.encode("utf-8")), dest=response, encoding="utf-8"
+    )
+
+    if pisa_status.err:
+        return HttpResponse("❌ PDF yaratishda xato!", status=500)
+    return response

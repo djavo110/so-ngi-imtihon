@@ -7,4 +7,5 @@ urlpatterns = [
     path('index/', index, name='index'),
     path('about/', about, name='about'),
     path('contact/', contact, name='contact'),
+    path('download-pdf/', download_about_pdf, name='download_about_pdf'),
 ]
