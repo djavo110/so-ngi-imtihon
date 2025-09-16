@@ -44,12 +44,20 @@ def contact(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
-            form.save()
+            contact_obj = form.save()  # saqlangan obyektni olamiz
+            print("Yangi xabar kelib tushdi")  # terminalga chiqadi
+            print(f"Ism: {contact_obj.name}")
+            print(f"Email: {contact_obj.email}")
+            print(f"Xabar: {contact_obj.message}")
+
             messages.success(request, "Xabaringiz uchun rahmat! Tez orada siz bilan bog'lanamiz.")
             return redirect('contact')
     else:
         form = ContactForm()
+
     return render(request, 'index.html', {'form': form})
+
+
 
 def login_views(request):
     fail_count = request.session.get('fail_count', 0)
@@ -105,7 +113,7 @@ def download_about_pdf(request):
                "Hozirda Toshkent to'qimachilik va yengil sanoat institutining Iqtisod fakultetida tahsil olyapman. "
                "3-kurs talabasi. Dasturlashga bo'lgan qiziqishim maktab davrlarimda boshlandi va shu sohada o'z bilimlarimni oshirishga harakat qilaman. "
                "Maqsadim - zamonaviy va foydalanuvchi uchun qulay veb-saytlar yaratish orqali raqamli dunyoda o'z izimni qoldirish."
-    }
+    }  
 
     html = render_to_string(template_path, context)
 
