@@ -19,45 +19,38 @@ class UserLoginForm(forms.Form):
 
 @login_required(login_url='login')
 def index(request):
-    personalinfo = PersonalInfo.objects.all()
-    skills = Skill.objects.all()
-    projects = Project.objects.all()
-    experiences = Experience.objects.all()
-    educations = Education.objects.all()
-    contact_messages = ContactMessage.objects.all()
+    personalinfo = PersonalInfo.objects.last()
+    portfolios = Portfolio.objects.all()
+    contact_info = ContactInfo.objects.last() 
+
+    if not personalinfo:
+        return HttpResponse("❌ Bazada PersonalInfo ma'lumoti topilmadi!", status=404)
+
     context = {
-        'personalinfo': personalinfo,
-        'skills': skills,
-        'projects': projects,
-        'experiences': experiences,
-        'educations': educations,
-        'contact_messages': contact_messages,
+        "name": personalinfo.name,
+        "profession": personalinfo.profession,
+        "about": personalinfo.about,
+        "birth_date": personalinfo.birth_date.strftime("%d %B %Y") if personalinfo.birth_date else "",
+        "address": personalinfo.address,
+        "phone": personalinfo.phone,
+        "email": personalinfo.email,
+        "linkedin": personalinfo.linkedin,
+        "github": personalinfo.github,
+        "instagram": personalinfo.instagram,
+        "image_url": personalinfo.image.url if personalinfo.image else None,
+
+        # 👇 shu joyda portfolios ham qo‘shildi
+        "portfolios": portfolios,
+        "contact_info": contact_info,
+        "personal_info": personalinfo,  # personalinfo obyektini to‘liq yuborish
     }
     return render(request, 'index.html', context)
 
-@login_required(login_url='login')
-def about(request):
-    return render(request, 'about.html')
-
-# @login_required(login_url='login')
-def contact(request):
-    if request.method == 'POST':
-        form = ContactForm(request.POST)
-        if form.is_valid():
-            contact_obj = form.save()  # saqlangan obyektni olamiz
-            print("Yangi xabar kelib tushdi")  # terminalga chiqadi
-            print(f"Ism: {contact_obj.name}")
-            print(f"Email: {contact_obj.email}")
-            print(f"Xabar: {contact_obj.message}")
-
-            messages.success(request, "Xabaringiz uchun rahmat! Tez orada siz bilan bog'lanamiz.")
-            return redirect('contact')
-    else:
-        form = ContactForm()
-
-    return render(request, 'index.html', {'form': form})
 
 
+def contactt(request):
+    contact_info = ContactInfo.objects.first()  # eng oxirgi ma’lumot
+    return render(request, "index.html", {"contact_info": contact_info})
 
 def login_views(request):
     fail_count = request.session.get('fail_count', 0)
@@ -97,28 +90,33 @@ def logout_view(request):
 
 def download_about_pdf(request):
     template_path = "pdf_portfolio.html"
-    image_path = os.path.join(settings.MEDIA_ROOT, "photo_my.jpg")
+
+    # Bazadagi oxirgi yozuvni olish (1 ta user ma’lumot uchun)
+    info = PersonalInfo.objects.last()
+    if not info:
+        return HttpResponse("❌ Bazada PersonalInfo ma’lumoti topilmadi!", status=404)
+
+    # Rasm path
+    image_path = os.path.join(settings.MEDIA_ROOT, str(info.image)) if info.image else None
+
     context = {
-        "photo": image_path, 
-        "name": "Javohir Mirzayev",
-        "birthday": "2 August 2005",
-        "website": "www.example.com",
-        "phone": "+998 (91) 443-16-83",
-        "city": "Uzbekistan",
-        "age": "20",
-        "degree": "Midge",
-        "email": "javohirmirzayev110@example.com",
-        "freelance": "Available",
-        "bio": "Men Buxoro viloyatining Vobkent tumanida tug'ilganman. "
-               "Hozirda Toshkent to'qimachilik va yengil sanoat institutining Iqtisod fakultetida tahsil olyapman. "
-               "3-kurs talabasi. Dasturlashga bo'lgan qiziqishim maktab davrlarimda boshlandi va shu sohada o'z bilimlarimni oshirishga harakat qilaman. "
-               "Maqsadim - zamonaviy va foydalanuvchi uchun qulay veb-saytlar yaratish orqali raqamli dunyoda o'z izimni qoldirish."
-    }  
+        "name": info.name,
+        "profession": info.profession,
+        "about": info.about,
+        "birth_date": info.birth_date.strftime("%d %B %Y") if info.birth_date else "",
+        "address": info.address,
+        "phone": info.phone,
+        "email": info.email,
+        "linkedin": info.linkedin,
+        "github": info.github,
+        "instagram": info.instagram,
+        "photo": image_path,
+    }
 
     html = render_to_string(template_path, context)
 
     response = HttpResponse(content_type="application/pdf")
-    response['Content-Disposition'] = 'attachment; filename="about.pdf"'
+    response['Content-Disposition'] = 'attachment; filename="personal_info.pdf"'
 
     pisa_status = pisa.CreatePDF(
         io.BytesIO(html.encode("utf-8")), dest=response, encoding="utf-8"
@@ -127,3 +125,19 @@ def download_about_pdf(request):
     if pisa_status.err:
         return HttpResponse("❌ PDF yaratishda xato!", status=500)
     return response
+
+def add_portfolio(request):
+    if request.method == "POST":
+        form = PortfolioForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect("add_portfolio")  # endi ishlaydi
+    else:
+        form = PortfolioForm()
+    return render(request, "add_portfolio.html", {"form": form})
+
+
+def portfolio_details(request, pk):
+    portfolio = get_object_or_404(Portfolio, pk=pk)
+    return render(request, "portfolio_details.html", {"portfolio": portfolio})
+

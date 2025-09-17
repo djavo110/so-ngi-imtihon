@@ -2,11 +2,24 @@ from django import forms
 from captcha.fields import CaptchaField
 from .models import *
 
-class ProjectForm(forms.ModelForm):
+class PortfolioForm(forms.ModelForm):
     class Meta:
-        model = Project
-        fields = '__all__'
+        model = Portfolio
+        fields = ['title', 'description', 'image', 'category', 'client', 'project_date']
+        read_only_fields = ['project_url']  
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
+            'category': forms.Select(attrs={'class': 'form-select'}),
+            'client': forms.TextInput(attrs={'class': 'form-control'}),
+            'project_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+        }
 
+class ContactInfoForm(forms.ModelForm):
+    class Meta:
+        model = ContactInfo
+        fields = '__all__'
+        
 class SkillForm(forms.ModelForm):
     class Meta:
         model = Skill

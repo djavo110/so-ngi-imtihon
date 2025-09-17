@@ -14,23 +14,20 @@
 <body>
     <h1>{{ name }}</h1>
 
-    <div class="photo">
-        <img src="{{ photo }}" alt="Profile Photo">
+    <div>
+        {% if photo %}
+            <img src="{{ photo }}" width="120" height="120" />
+        {% endif %}
+        <h3>{{ profession }}</h3>
+        <p><b>Tug'ilgan sana:</b> {{ birth_date }}</p>
+        <p><b>Manzil:</b> {{ address }}</p>
+        <p><b>Telefon:</b> {{ phone }}</p>
+        <p><b>Email:</b> {{ email }}</p>
+        <p><b>GitHub:</b> {{ github }}</p>
+        <p><b>Instagram:</b> {{ instagram }}</p>
+        <hr>
+        <p>{{ about }}</p>
     </div>
 
-    <div class="info">
-        <p><strong>Birthday:</strong> {{ birthday }}</p>
-        <p><strong>Website:</strong> {{ website }}</p>
-        <p><strong>Phone:</strong> {{ phone }}</p>
-        <p><strong>City:</strong> {{ city }}</p>
-        <p><strong>Age:</strong> {{ age }}</p>
-        <p><strong>Degree:</strong> {{ degree }}</p>
-        <p><strong>Email:</strong> {{ email }}</p>
-        <p><strong>Freelance:</strong> {{ freelance }}</p>
-    </div>
-
-    <div class="bio">
-        <p>{{ bio }}</p>
-    </div>
 </body>
 </html>

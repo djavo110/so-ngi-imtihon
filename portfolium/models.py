@@ -7,11 +7,22 @@ class Skill(models.Model):
     def __str__(self):
         return self.name
 
-class Project(models.Model):
+class Portfolio(models.Model):
+    CATEGORY_CHOICES = [
+        ("app", "App"),
+        ("branding", "Branding"),
+        ("product", "Product"),
+        ("book", "Book"),
+        ("web", "Web"),
+    ]
+
     title = models.CharField(max_length=200)
     description = models.TextField()
-    technologies = models.CharField(max_length=200)
-    link = models.URLField(blank=True, null=True)
+    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
+    client = models.CharField(max_length=200, blank=True, null=True)
+    project_date = models.DateField(blank=True, null=True)
+    project_url = models.URLField(blank=True, null=True)
+    image = models.ImageField(upload_to="portfolio/")
 
     def __str__(self):
         return self.title
@@ -60,3 +71,12 @@ class ContactMessage(models.Model):
 
     def __str__(self):
         return f"Message from {self.name}"
+
+class ContactInfo(models.Model):
+    address = models.CharField(max_length=255)
+    phone = models.CharField(max_length=50)
+    email = models.EmailField()
+    map_url = models.TextField(blank=True, null=True)  # Google Maps iframe uchun
+
+    def __str__(self):
+        return self.address
