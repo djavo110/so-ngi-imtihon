@@ -373,38 +373,43 @@ html, body {
 
       <div class="container" data-aos="fade-up" data-aos-delay="100">
 
-        <div class="row gy-4 justify-content-center" >
+        <div class="row gy-4 justify-content-center">
           <div class="col-lg-4">
-            <img src="/media/photo_my.jpg" class="img-fluid" alt="">
+            {% if personal_info.image %}
+              <img src="{{ personal_info.image.url }}" class="img-fluid" alt="">
+            {% else %}
+              <img src="/media/photo_my.jpg" class="img-fluid" alt="">
+            {% endif %}
           </div>
           <div class="col-lg-8 content">
-            <h2>Web Developer.</h2>
+            <h2>{{ personal_info.profession }}</h2>
             <p class="fst-italic py-3">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-              magna aliqua.
+              {{ personal_info.about }}
             </p>
             <div class="row">
               <div class="col-lg-6">
                 <ul>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Tug'ilgan sana:</strong> <span>{{birth_date}}</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Manzil:</strong> <span>{{address}}</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Telefon:</strong> <span>{{phone}}</span></li>
-
+                  <li><i class="bi bi-chevron-right"></i> <strong>Tug'ilgan sana:</strong> <span>{{ personal_info.birth_date }}</span></li>
+                  <li><i class="bi bi-chevron-right"></i> <strong>Manzil:</strong> <span>{{ personal_info.address }}</span></li>
+                  <li><i class="bi bi-chevron-right"></i> <strong>Telefon:</strong> <span>{{ personal_info.phone }}</span></li>
                 </ul>
               </div>
               <div class="col-lg-6">
                 <ul>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Email:</strong> <span>{{email}}</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>GitHub:</strong> <span>{{github}}</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Instagram:</strong> <span>{{instagram}}</span></li>
+                  <li><i class="bi bi-chevron-right"></i> <strong>Email:</strong> <span>{{ personal_info.email }}</span></li>
+                  <li><i class="bi bi-chevron-right"></i> <strong>GitHub:</strong> <span>{{ personal_info.github }}</span></li>
+                  <li><i class="bi bi-chevron-right"></i> <strong>Instagram:</strong> <span>{{ personal_info.instagram }}</span></li>
                 </ul>
               </div>
             </div>
-            <p class="py-3">
-              {{about}}
-            </p>
+
+            <!-- 🔽 Faqat admin uchun edit tugma -->
+            {% if user.is_authenticated %}
+              <a href="{% url 'edit_personal_info' personal_info.id %}" class="btn btn-warning mt-3">✏️ Ma’lumotlarni tahrirlash</a>
+            {% endif %}
           </div>
         </div>
+
 
       </div>
     <!-- PDF yuklab olish tugmasi -->

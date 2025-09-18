@@ -1,16 +1,120 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <style>
+    /* -------- Personal Info Edit Form Styles -------- */
+
+.container {
+  max-width: 720px;
+  background: #ffffff;
+  padding: 32px;
+  margin-top: 40px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+/* Title */
+.container h2 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Form fields */
+form p {
+  margin-bottom: 18px;
+}
+
+form label {
+  font-weight: 600;
+  color: #374151;
+  display: block;
+  margin-bottom: 6px;
+}
+
+form input,
+form textarea,
+form select {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  font-size: 0.95rem;
+  color: #1f2937;
+  background: #f9fafb;
+  transition: border-color .3s ease, box-shadow .3s ease;
+}
+
+form input:focus,
+form textarea:focus,
+form select:focus {
+  border-color: #4154f1;
+  box-shadow: 0 0 0 3px rgba(65,84,241,0.15);
+  outline: none;
+  background: #fff;
+}
+
+/* Image upload field */
+form input[type="file"] {
+  padding: 6px;
+  border: none;
+  background: transparent;
+}
+
+/* Save button */
+form button {
+  display: inline-block;
+  background: #16a34a;
+  border: none;
+  padding: 10px 24px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(22,163,74,0.3);
+  transition: background .3s ease, transform .2s ease;
+}
+
+form button:hover {
+  background: #15803d;
+  transform: translateY(-2px);
+}
+
+form button:active {
+  transform: translateY(0);
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+  .container {
+    padding: 20px;
+  }
+  .container h2 {
+    font-size: 1.3rem;
+  }
+}
+
+  </style>
 </head>
 <body>
-  <h2>Shaxsiy ma'lumotlarni tahrirlash</h2>
-  <form method="POST">
+{% block content %}
+<div class="container mt-4">
+  <h2>✏️ Shaxsiy ma’lumotlarni tahrirlash</h2>
+  <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Saqlash</button>
+    <button type="submit" class="btn btn-success">Saqlash</button>
   </form>
+</div>
+{% endblock %}
+
 </body>
-</html> -->
+</html>

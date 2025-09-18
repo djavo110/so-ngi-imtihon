@@ -46,7 +46,18 @@ def index(request):
     }
     return render(request, 'index.html', context)
 
+def edit_personal_info(request, pk):
+    personal_info = get_object_or_404(PersonalInfo, pk=pk)
 
+    if request.method == "POST":
+        form = PersonalInfoForm(request.POST, request.FILES, instance=personal_info)
+        if form.is_valid():
+            form.save()
+            return redirect("index")
+    else:
+        form = PersonalInfoForm(instance=personal_info)
+
+    return render(request, "about.html", {"form": form})
 
 def contactt(request):
     contact_info = ContactInfo.objects.first()  # eng oxirgi ma’lumot
