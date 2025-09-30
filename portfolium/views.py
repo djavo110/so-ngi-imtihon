@@ -11,6 +11,7 @@ from xhtml2pdf import pisa
 from django.template.loader import render_to_string
 import os, io
 from django.conf import settings
+from django.core.mail import send_mail
 
 class UserLoginForm(forms.Form):
     username = forms.CharField(label="Username")
@@ -45,19 +46,6 @@ def index(request):
         "personal_info": personalinfo,  # personalinfo obyektini to‘liq yuborish
     }
     return render(request, 'index.html', context)
-
-def edit_personal_info(request, pk):
-    personal_info = get_object_or_404(PersonalInfo, pk=pk)
-
-    if request.method == "POST":
-        form = PersonalInfoForm(request.POST, request.FILES, instance=personal_info)
-        if form.is_valid():
-            form.save()
-            return redirect("index")
-    else:
-        form = PersonalInfoForm(instance=personal_info)
-
-    return render(request, "about.html", {"form": form})
 
 def contactt(request):
     contact_info = ContactInfo.objects.first()  # eng oxirgi ma’lumot
@@ -152,3 +140,22 @@ def portfolio_details(request, pk):
     portfolio = get_object_or_404(Portfolio, pk=pk)
     return render(request, "portfolio_details.html", {"portfolio": portfolio})
 
+def contact_view(request):
+    if request.method == "POST":
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            contact = form.save()  # bazaga yozildi
+
+            # email yuborish
+            send_mail(
+                subject=f"{contact.subject} (from {contact.name})",
+                message=contact.message,
+                from_email=contact.email,
+                recipient_list=['mirzayevjavohir110@gmail.com'],  # sizning emailingiz
+                fail_silently=False,
+            )
+            return redirect("success")  # muvaffaqiyat sahifasi
+    else:
+        form = ContactForm()
+
+    return render(request, "contact.html", {"form": form})

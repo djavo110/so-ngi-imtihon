@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure--32t76#^m#(**7z-d0yx^1ky_-xp)e9g5ndmw=sw)y*r^%ivly
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*', '134.122.67.117']
 
 
 # Application definition
@@ -114,7 +114,13 @@ USE_I18N = True
 
 USE_TZ = True
 
-
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "mirzayevjavohir110@gmail.com"   # o'z emailingiz
+EMAIL_HOST_PASSWORD = "omwd xiko fefo wnzi"          # Gmail app password (oddiy parol emas!)
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 

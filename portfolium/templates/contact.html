@@ -1,16 +1,33 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Aloqa formasi</title>
 </head>
 <body>
+    <h2>Biz bilan bog‘laning</h2>
     <form method="POST" action="{% url 'contact' %}">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Yuborish</button>
-</form>
-
+        {% csrf_token %}
+        <p>
+            {{ form.name.label_tag }}<br>
+            {{ form.name }}
+        </p>
+        <p>
+            {{ form.email.label_tag }}<br>
+            {{ form.email }}
+        </p>
+        <p>
+            {{ form.subject.label_tag }}<br>
+            {{ form.subject }}
+        </p>
+        <p>
+            {{ form.message.label_tag }}<br>
+            {{ form.message }}
+        </p>
+        <button type="submit">Yuborish</button>
+    </form>
 </body>
 </html>
+```

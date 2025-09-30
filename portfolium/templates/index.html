@@ -137,22 +137,15 @@ section:nth-child(even) {
 /* === Hero (asosiy bo‘lim) === */
 .hero {
   position: relative;
-  width: 100%;
-  height: 100vh; /* Butun ekran balandligi */
+  /* width: 100%; */
   overflow: hidden;
-}
-
-.hero-img {
-  width: 100%;
-  height: 150%;
-  font-size: 1221px x 350px;
-  object-fit: cover; /* Rasmni butun ekranni to‘ldiradi */
 }
 
 .hero-content {
   position: absolute;
   top: 50%;
-  left: 50%;
+  right: 45%;
+  /* left: 50%; */
   transform: translate(-50%, -50%);
   text-align: center;
   color: white;
@@ -286,7 +279,7 @@ html, body {
 }
 
 
-
+  
     </style>
 </head>
 <body>
@@ -335,7 +328,7 @@ html, body {
 
       <!-- Hero Section -->
       <section class="hero">
-        <img src="/media/photo_my.jpg" alt="Profile Photo" class="hero-img" data-aos="fade-in">
+        <img src="/media/photo_2025-09-28_01-06-24.jpg" alt="Profile Photo" class="" data-aos="fade-in">
 
         <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
 
@@ -378,7 +371,7 @@ html, body {
             {% if personal_info.image %}
               <img src="{{ personal_info.image.url }}" class="img-fluid" alt="">
             {% else %}
-              <img src="/media/photo_my.jpg" class="img-fluid" alt="">
+              <img src="/media/photo_2025-09-28_01-06-24.jpg" class="img-fluid" alt="">
             {% endif %}
           </div>
           <div class="col-lg-8 content">
@@ -402,11 +395,6 @@ html, body {
                 </ul>
               </div>
             </div>
-
-            <!-- 🔽 Faqat admin uchun edit tugma -->
-            {% if user.is_authenticated %}
-              <a href="{% url 'edit_personal_info' personal_info.id %}" class="btn btn-warning mt-3">✏️ Ma’lumotlarni tahrirlash</a>
-            {% endif %}
           </div>
         </div>
 
