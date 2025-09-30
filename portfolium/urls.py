@@ -8,6 +8,6 @@ urlpatterns = [
     path("portfolio/<int:pk>/", portfolio_details, name="portfolio_details"),
     path('contactt/', contactt, name='contactt'),
     path("contact/", contact_view, name="contact"),
-    path('login/', login_views, name='login'),
+    # path('login/', login_views, name='login'),
     path('logout/', logout_view, name='logout'),
 ]
