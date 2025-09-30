@@ -13,10 +13,6 @@ import os, io
 from django.conf import settings
 from django.core.mail import send_mail
 
-class UserLoginForm(forms.Form):
-    username = forms.CharField(label="Username")
-    password = forms.CharField(widget=forms.PasswordInput, label="Password")
-    captcha = CaptchaField(required=False) 
 
 def index(request):
     personalinfo = PersonalInfo.objects.last()
@@ -50,42 +46,42 @@ def contactt(request):
     contact_info = ContactInfo.objects.first()  # eng oxirgi ma’lumot
     return render(request, "index.html", {"contact_info": contact_info})
 
-@login_required(login_url='login')
-def login_views(request):
-    fail_count = request.session.get('fail_count', 0)
+# @login_required(login_url='login')
+# def login_views(request):
+#     fail_count = request.session.get('fail_count', 0)
 
-    # Dinamik login form yasaymiz
-    class DynamicLoginForm(forms.Form):
-        username = forms.CharField()
-        password = forms.CharField(widget=forms.PasswordInput)
+#     # Dinamik login form yasaymiz
+#     class DynamicLoginForm(forms.Form):
+#         username = forms.CharField()
+#         password = forms.CharField(widget=forms.PasswordInput)
 
-        if fail_count >= 3:   # faqat 3 martadan oshganda captcha chiqadi
-            captcha = CaptchaField()
+#         if fail_count >= 3:   # faqat 3 martadan oshganda captcha chiqadi
+#             captcha = CaptchaField()
 
-    if request.method == 'POST':
-        form = DynamicLoginForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
+#     if request.method == 'POST':
+#         form = DynamicLoginForm(request.POST)
+#         if form.is_valid():
+#             username = form.cleaned_data.get('username')
+#             password = form.cleaned_data.get('password')
 
-            user = authenticate(request, username=username, password=password)
-            if user is not None:
-                login(request, user)
-                request.session['fail_count'] = 0  # muvaffaqiyatli kirganda reset
-                return redirect('index')
-            else:
-                # Xato login -> fail_count ni oshiramiz
-                request.session['fail_count'] = fail_count + 1
-                messages.error(request, "Login yoki parol xato!")
-    else:
-        form = DynamicLoginForm()
+#             user = authenticate(request, username=username, password=password)
+#             if user is not None:
+#                 login(request, user)
+#                 request.session['fail_count'] = 0  # muvaffaqiyatli kirganda reset
+#                 return redirect('')
+#             else:
+#                 # Xato login -> fail_count ni oshiramiz
+#                 request.session['fail_count'] = fail_count + 1
+#                 messages.error(request, "Login yoki parol xato!")
+#     else:
+#         form = DynamicLoginForm()
 
-    return render(request, 'login.html', {'form': form})
+#     return render(request, 'login.html', {'form': form})
 
 
-def logout_view(request):
-    logout(request)
-    return redirect('login')
+# def logout_view(request):
+#     logout(request)
+#     return redirect('login')
 
 def download_about_pdf(request):
     template_path = "pdf_portfolio.html"
@@ -159,3 +155,9 @@ def contact_view(request):
         form = ContactForm()
 
     return render(request, "contact.html", {"form": form})
+
+
+# class UserLoginForm(forms.Form):
+#     username = forms.CharField(label="Username")
+#     password = forms.CharField(widget=forms.PasswordInput, label="Password")
+#     captcha = CaptchaField(required=False) 
