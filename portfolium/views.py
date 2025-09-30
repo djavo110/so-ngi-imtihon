@@ -18,7 +18,6 @@ class UserLoginForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput, label="Password")
     captcha = CaptchaField(required=False) 
 
-@login_required(login_url='login')
 def index(request):
     personalinfo = PersonalInfo.objects.last()
     portfolios = Portfolio.objects.all()
@@ -51,6 +50,7 @@ def contactt(request):
     contact_info = ContactInfo.objects.first()  # eng oxirgi ma’lumot
     return render(request, "index.html", {"contact_info": contact_info})
 
+@login_required(login_url='login')
 def login_views(request):
     fail_count = request.session.get('fail_count', 0)
 
