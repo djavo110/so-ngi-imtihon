@@ -46,7 +46,6 @@ def contactt(request):
     contact_info = ContactInfo.objects.first()  # eng oxirgi ma’lumot
     return render(request, "index.html", {"contact_info": contact_info})
 
-# @login_required(login_url='login')
 # def login_views(request):
 #     fail_count = request.session.get('fail_count', 0)
 
